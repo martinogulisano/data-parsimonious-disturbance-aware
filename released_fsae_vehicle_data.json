@@ -1,0 +1,203 @@
+{
+  "metadata": {
+    "name": "FSAE single-track vehicle dataset",
+    "description": "Vehicle, tyre and uncertainty parameters of the Formula SAE car used for disturbance-aware minimum-lap-time planning.",
+    "model_type": "FSAESingleTrack",
+    "reference_frame": "Body frame: x forward, y left, z up. Global frame: planar (x, y).",
+    "notes": "Parameter names follow the notation used in the accompanying paper."
+  },
+
+  "vehicle": {
+    "mass": {
+      "symbol": "m",
+      "value": 300,
+      "unit": "kg",
+      "description": "Total vehicle mass."
+    },
+    "gravity": {
+      "symbol": "g",
+      "value": 9.81,
+      "unit": "m/s^2",
+      "description": "Gravitational acceleration."
+    },
+    "yaw_inertia": {
+      "symbol": "Jz",
+      "value": 157.4,
+      "unit": "kg*m^2",
+      "description": "Yaw moment of inertia about the vertical axis through the CoM."
+    },
+    "wheelbase": {
+      "symbol": "l",
+      "value": 1.53,
+      "unit": "m",
+      "description": "Distance between front and rear axles."
+    },
+    "weight_distribution_bias": {
+      "symbol": "wdb",
+      "value": 0.42,
+      "unit": "-",
+      "description": "wdb = a2/(a1+a2): normalized longitudinal distance from CoM to rear axle. a1 = (1-wdb)*l (CoM to front axle), a2 = wdb*l (CoM to rear axle)."
+    },
+    "CoM_to_front_axle": {
+      "symbol": "a1",
+      "value": 0.887,
+      "unit": "m",
+      "description": "Longitudinal distance from CoM to front axle, (1-wdb)*l."
+    },
+    "CoM_to_rear_axle": {
+      "symbol": "a2",
+      "value": 0.643,
+      "unit": "m",
+      "description": "Longitudinal distance from CoM to rear axle, wdb*l."
+    },
+    "front_track_width": {
+      "symbol": "t1",
+      "value": 1.21,
+      "unit": "m",
+      "description": "Front track width."
+    },
+    "rear_track_width": {
+      "symbol": "t2",
+      "value": 1.11,
+      "unit": "m",
+      "description": "Rear track width."
+    },
+    "CoM_height": {
+      "symbol": "h",
+      "value": 0.3,
+      "unit": "m",
+      "description": "Height of the centre of mass above ground."
+    },
+    "brake_balance": {
+      "symbol": "bb",
+      "value": 1.5,
+      "unit": "-",
+      "description": "Front/rear brake balance ratio (0.6/0.4)."
+    },
+    "friction_x": {
+      "symbol": "mu_x",
+      "value": 1.15,
+      "unit": "-",
+      "description": "Longitudinal road-tyre friction coefficient (dry)."
+    },
+    "friction_y": {
+      "symbol": "mu_y",
+      "value": 1.15,
+      "unit": "-",
+      "description": "Lateral road-tyre friction coefficient (dry)."
+    },
+    "max_power": {
+      "symbol": "Pmax",
+      "value": 47000,
+      "unit": "W",
+      "description": "Maximum traction power."
+    }
+  },
+
+  "aerodynamics": {
+    "air_density": {
+      "symbol": "rho",
+      "value": 1.2073,
+      "unit": "kg/m^3",
+      "description": "Air density."
+    },
+    "frontal_area": {
+      "symbol": "S",
+      "value": 1.2,
+      "unit": "m^2",
+      "description": "Reference frontal area."
+    },
+    "drag_coefficient": {
+      "symbol": "Cx",
+      "value": 0.84,
+      "unit": "-",
+      "description": "Aerodynamic drag coefficient. Drag force = 0.5*rho*S*Cx*u^2."
+    },
+    "lift_coefficient": {
+      "symbol": "Cz",
+      "value": 1.34,
+      "unit": "-",
+      "description": "Total aerodynamic (down)lift coefficient."
+    },
+    "aero_balance": {
+      "symbol": "ab",
+      "value": 0.4,
+      "unit": "-",
+      "description": "Front aero load fraction. Cz1 = ab*Cz (front), Cz2 = (1-ab)*Cz (rear)."
+    },
+    "front_lift_coefficient": {
+      "symbol": "Cz1",
+      "value": 0.536,
+      "unit": "-",
+      "description": "Front aerodynamic downforce coefficient, ab*Cz."
+    },
+    "rear_lift_coefficient": {
+      "symbol": "Cz2",
+      "value": 0.804,
+      "unit": "-",
+      "description": "Rear aerodynamic downforce coefficient, (1-ab)*Cz."
+    }
+  },
+
+  "tyres": {
+    "model": "Pure lateral Magic Formula; front and rear axles use identical coefficients.",
+    "magic_formula": {
+      "FNOMIN": 4000,
+      "PCY1": 1.2441,
+      "PDY1": 1.0491,
+      "PDY2": -0.35918,
+      "PKY1": -12.2368,
+      "PKY2": 1.3459,
+      "PEY1": -0.46156,
+      "PEY2": -0.52075
+    },
+    "magic_formula_note": "Pure lateral slip (no combined slip, no camber). dfz = (Fz - FNOMIN)/FNOMIN; Dy = (PDY1 + PDY2*dfz)*Fz; Cy = PCY1; By = PKY1*FNOMIN*sin(2*atan(Fz/(PKY2*FNOMIN)))/(Cy*Dy); Ey = PEY1 + PEY2*dfz; Fy = -Dy*sin(Cy*atan(By*alpha - Ey*(By*alpha - atan(By*alpha)))). alpha [rad]: lateral slip angle; Fz [N]: vertical load.",
+    "parameter_units": {
+      "FNOMIN": "N",
+      "PCY1": "-",
+      "PDY1": "-",
+      "PDY2": "-",
+      "PKY1": "-",
+      "PKY2": "-",
+      "PEY1": "-",
+      "PEY2": "-"
+    }
+  },
+
+  "uncertainty": {
+    "augmented_state_eta": {
+      "state_vector_order": [
+        { "index": 1, "symbol": "u",   "unit": "m/s" },
+        { "index": 2, "symbol": "v",   "unit": "m/s" },
+        { "index": 3, "symbol": "r",   "unit": "rad/s" },
+        { "index": 4, "symbol": "xg",  "unit": "m" },
+        { "index": 5, "symbol": "yg",  "unit": "m" },
+        { "index": 6, "symbol": "psi", "unit": "rad" }
+      ],
+      "parameter_vector_order": [
+        { "index": 7, "symbol": "Jz",  "unit": "kg*m^2" },
+        { "index": 8, "symbol": "h",   "unit": "m" },
+        { "index": 9, "symbol": "wdb", "unit": "-" },
+        { "index": 10, "symbol": "Cx", "unit": "-" }
+      ]
+    },
+    "P0": {
+      "description": "P0 = diag([sigma_bar_x; sigma_bar_p])^2",
+      "sigma_bar_x": {
+        "value": [0.2, 0.06, 0.05, 0.5, 0.5, 0.0174],
+        "unit": "same as state_vector_order"
+      },
+      "sigma_bar_p": {
+        "value": [6, 0.02, 0.02, 0.04],
+        "unit": "same as parameter_vector_order"
+      }
+    },
+    "Q": {
+      "description": "Q = diag(sigma_bar_w)^2",
+      "sigma_bar_w": {
+        "value": [0.055, 0.032, 0.05, 0.0, 0.0, 0.0],
+        "unit": ["m/s^2", "m/s^2", "rad/s^2", "m/s^2", "m/s^2", "rad/s^2"]
+      }
+    }
+  }
+}
