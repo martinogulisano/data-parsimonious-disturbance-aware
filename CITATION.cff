@@ -1,5 +1,6 @@
-cff-version: 1.1.0
+cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+title: "Parsimonious disturbance-aware MLTP: supplementary material"
 authors:
   - family-names: Gulisano
     given-names: Martino
@@ -12,6 +13,7 @@ authors:
   - family-names: Guiggiani
     given-names: Massimo
     orcid: https://orcid.org/0000-0002-8818-9199
-title: "martinogulisano/data-parsimonious-disturbance-aware: Parsimonious disturbance-aware MLTP: supplementary material"
 version: v1.0
 date-released: 2026-07-10
+repository-code: "https://github.com/martinogulisano/data-parsimonious-disturbance-aware"
+license: CC-BY-4.0
